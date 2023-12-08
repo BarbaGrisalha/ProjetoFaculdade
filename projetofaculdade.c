@@ -21,4 +21,8 @@ typedef struct
 }Avaliacao;
 
 
- 
+int main (){
+
+
+    return 0;
+}
