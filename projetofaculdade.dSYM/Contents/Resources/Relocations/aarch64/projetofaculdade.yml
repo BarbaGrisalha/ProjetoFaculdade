@@ -1,0 +1,9 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/altamir/Documents/Faculdade/Fundamentos_Programacao/ProjetoFaculdade/projetofaculdade'
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003BBC, symSize: 0xE0 }
+  - { offsetInCU: 0x41, offset: 0x41, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003BBC, symSize: 0xE0 }
+  - { offsetInCU: 0x69, offset: 0x69, size: 0x8, addend: 0x0, symName: _desenhar, symObjAddr: 0xF0, symBinAddr: 0x100003CAC, symSize: 0x148 }
+  - { offsetInCU: 0xB7, offset: 0xB7, size: 0x8, addend: 0x0, symName: _menu, symObjAddr: 0x238, symBinAddr: 0x100003DF4, symSize: 0x7C }
+...
