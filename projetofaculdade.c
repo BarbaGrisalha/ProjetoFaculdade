@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 //Definição da estrutura
@@ -8,7 +9,7 @@
 typedef struct 
 {
     int idEstudante;
-    int nrEstudante[7];
+    int nrEstudante;
     char nomeEstudante[50];
     int codigoCursoEstudante;
     char emailEstudante[50];
@@ -53,7 +54,7 @@ int main ()
         switch (opcao)
         {
             case 1:
-                printf("Selecionou 1\n");
+                //printf("Selecionou 1\n");
                 printf("Registar Dados Estudante :");
                 registarDadosEstudantes(&estudante);//Passando o endereço da variável
 
@@ -63,7 +64,6 @@ int main ()
             case 2:
                 printf("Selecionou 2\n");
                 fflush(stdin);
-                getchar();
                 break;
             case 3:
                 printf("Selecionou 3\n");
@@ -71,7 +71,9 @@ int main ()
                 getchar();
                 break;
             case 0:
-                printf("Selecionou 0\n");
+                exit(0);
+                system("cls");
+                //printf("Selecionou 0\n");
                 fflush(stdin);
                 getchar();
                 break;       
@@ -95,7 +97,7 @@ int menu()
     int opcao;
     system("clear");
   
-   printf("\t\t\t#########################################\n");
+        printf("\t\t\t#########################################\n");
         printf("\t\t\t#                                       #\n");
         printf("\t\t\t#                  Menu                 #\n");
         printf("\t\t\t#                                       #\n");
@@ -104,7 +106,7 @@ int menu()
         printf("\t\t\t#  [3] Avaliações                       #\n");
         printf("\t\t\t#  [0] Sair                             #\n");
         printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#   Insira a opção desejada:            #\n");
+        printf("\t\t\t#      Insira a opção desejada:         #\n");
         printf("\t\t\t#########################################\n");
         scanf("%d", &opcao);
     
@@ -114,31 +116,42 @@ int menu()
 int registarDadosEstudantes(Estudante* estudante)
 {
     char opcao;
-    do
-    {
-       printf("\nEntre com o ID do estudante: \n");
-    scanf("%d",&(estudante->idEstudante));
-    printf("Entre com o NR do estudante: \n");
-    scanf("%d",&(estudante->nrEstudante[7]));
-    printf("Entre com o NOME do estudante: \n");
-    scanf("%s",&(estudante->nomeEstudante[50]));
-    printf("Entre com o CODIGO do curso do estudante: \n");
-    scanf("%d",&(estudante->codigoCursoEstudante));
-    printf("Entre com o EMAIL do estudante: \n");
-    scanf("%s",&(estudante->emailEstudante[50]));
-    printf("Deseja inserir outro estudante?");
-    scanf("%s", &opcao);
-    } while (opcao !='n' || opcao !='N');
-    
-   
-  
+    do{
+        printf("\nEntre com o ID do estudante: \n");
+        scanf("%d",&(estudante->idEstudante));
+        printf("Entre com o NR do estudante: \n");
+        scanf("%d",&(estudante->nrEstudante));
+        printf("Entre com o NOME do estudante: \n");
+        fflush(stdin);
+        scanf("%50[^\n]",&(estudante->nomeEstudante));
+        if(strlen(estudante->nomeEstudante)>50)
+        {
+            printf("Nome do estudante possui mais de que 50 caractees.\n");
+        }
+        else
+        {
+            printf("Entre com o CODIGO do curso do estudante: \n");
+            scanf("%d",&(estudante->codigoCursoEstudante));
+            printf("Entre com o EMAIL do estudante: \n");
+            fflush(stdin);
+            scanf("%[^\n]",&(estudante->emailEstudante[50]));
+            printf("Deseja inserir outro estudante?\n");
+            scanf(" %c", &opcao);//aqui é importante ainda dar um enter após escolher o n ou s.
+        }
+    } while (opcao !='n' && opcao !='N');
     return 0 ;
 }
-
-int consultarDadosEstudante()
+/*
+void consultarDadosEstudante(struct Estudante estudante)
 {
+   
+    estudante.nomeEstudante;
+    estudante.nomeUnidadeCurricular;
+    
+    printf("Dados inseridos na struct estudantes.");
+    printf(estudante.nomeEstudante);
 
-    return 0;
+   
 }
 
-
+*/
