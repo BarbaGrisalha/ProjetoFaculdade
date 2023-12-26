@@ -41,6 +41,9 @@ typedef struct
 int menu();
 void desenhar(int,int);
 int registarDadosEstudantes(Estudante* estudante);
+void gravacaoDados();
+
+
 //###### MAIN    ######
 int main ()
 {
@@ -57,7 +60,7 @@ int main ()
                 //printf("Selecionou 1\n");
                 printf("Registar Dados Estudante :");
                 registarDadosEstudantes(&estudante);//Passando o endereço da variável
-
+                gravacaoDados(registarDadosEstudantes);
                 fflush(stdin);
                 getchar();
                 break;
@@ -86,7 +89,7 @@ int main ()
         
     } while (opcao !=0);
     
-
+    gravacaoDados();
     return 0;
 }
 
@@ -155,3 +158,15 @@ void consultarDadosEstudante(struct Estudante estudante)
 }
 
 */
+void gravacaoDados(){
+    FILE *arquivoDados; // criando a variável ponteiro para o arquivo
+
+    arquivoDados=fopen("arquivo.txt","a");//abrindo o arquivo
+
+    fclose(arquivoDados);//fechando o arquivo
+
+    printf("arquivo criado com sucesso!");
+
+
+
+}
