@@ -60,7 +60,7 @@ int main ()
                 //printf("Selecionou 1\n");
                 printf("Registar Dados Estudante :");
                 registarDadosEstudantes(&estudante);//Passando o endereço da variável
-                gravacaoDados(registarDadosEstudantes);
+                gravacaoDados(&estudante);
                 fflush(stdin);
                 getchar();
                 break;
@@ -126,7 +126,7 @@ int registarDadosEstudantes(Estudante* estudante)
         scanf("%d",&(estudante->nrEstudante));
         printf("Entre com o NOME do estudante: \n");
         fflush(stdin);
-        scanf("%50[^\n]",&(estudante->nomeEstudante));
+        scanf("%49[^\n]",estudante->nomeEstudante);
         if(strlen(estudante->nomeEstudante)>50)
         {
             printf("Nome do estudante possui mais de que 50 caractees.\n");
@@ -137,7 +137,7 @@ int registarDadosEstudantes(Estudante* estudante)
             scanf("%d",&(estudante->codigoCursoEstudante));
             printf("Entre com o EMAIL do estudante: \n");
             fflush(stdin);
-            scanf("%[^\n]",&(estudante->emailEstudante[50]));
+            scanf("%49[^\n]",estudante->emailEstudante);
             printf("Deseja inserir outro estudante?\n");
             scanf(" %c", &opcao);//aqui é importante ainda dar um enter após escolher o n ou s.
         }
@@ -158,15 +158,21 @@ void consultarDadosEstudante(struct Estudante estudante)
 }
 
 */
-void gravacaoDados(){
-    FILE *arquivoDados; // criando a variável ponteiro para o arquivo
+void gravacaoDados(Estudante* estudante) {
+    FILE *arquivoDados; // Criando a variável ponteiro para o arquivo
 
-    arquivoDados=fopen("arquivo.txt","a");//abrindo o arquivo
+    arquivoDados = fopen("arquivo.txt", "a"); // Abrindo o arquivo no modo de adição ("a")
 
-    fclose(arquivoDados);//fechando o arquivo
+    // Verificando se o arquivo foi aberto corretamente
+    if (arquivoDados == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return;
+    }
 
-    printf("arquivo criado com sucesso!");
+    // Gravando os dados no arquivo
+    fprintf(arquivoDados, "%d,%d,%s,%d,%s\n", estudante->idEstudante, estudante->nrEstudante, estudante->nomeEstudante, estudante->codigoCursoEstudante, estudante->emailEstudante);
 
+    fclose(arquivoDados); // Fechando o arquivo
 
-
+    printf("Dados gravados com sucesso no arquivo!\n");
 }
