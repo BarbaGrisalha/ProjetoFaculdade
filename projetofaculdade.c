@@ -41,7 +41,8 @@ typedef struct
 int menu();
 void desenhar(int,int);
 int registarDadosEstudantes(Estudante* estudante);
-void gravacaoDados();
+void gravacaoDados(Estudante* estudante);
+int registarDadosUc(Uc* unidade_curricular);
 
 
 //###### MAIN    ######
@@ -50,6 +51,7 @@ int main ()
     int opcao;
     //system("clear");
     Estudante estudante; //Variável para armazenar os dados do estudante
+    Uc unidade_curricular; //Varíavel para guardar as informações da Unidade Curricular
     
     do
     {
@@ -57,15 +59,15 @@ int main ()
         switch (opcao)
         {
             case 1:
-                //printf("Selecionou 1\n");
                 printf("Registar Dados Estudante :");
                 registarDadosEstudantes(&estudante);//Passando o endereço da variável
-                gravacaoDados(&estudante);
+                gravacaoDados(&estudante);//Chamando aqui a função com o endereço da variável
                 fflush(stdin);
                 getchar();
                 break;
             case 2:
                 printf("Selecionou 2\n");
+                registarDadosUc(&unidade_curricular);
                 fflush(stdin);
                 break;
             case 3:
@@ -89,7 +91,7 @@ int main ()
         
     } while (opcao !=0);
     
-    gravacaoDados();
+    gravacaoDados(&estudante);
     return 0;
 }
 
@@ -144,20 +146,7 @@ int registarDadosEstudantes(Estudante* estudante)
     } while (opcao !='n' && opcao !='N');
     return 0 ;
 }
-/*
-void consultarDadosEstudante(struct Estudante estudante)
-{
-   
-    estudante.nomeEstudante;
-    estudante.nomeUnidadeCurricular;
-    
-    printf("Dados inseridos na struct estudantes.");
-    printf(estudante.nomeEstudante);
 
-   
-}
-
-*/
 void gravacaoDados(Estudante* estudante) {
     FILE *arquivoDados; // Criando a variável ponteiro para o arquivo
 
@@ -175,4 +164,38 @@ void gravacaoDados(Estudante* estudante) {
     fclose(arquivoDados); // Fechando o arquivo
 
     printf("Dados gravados com sucesso no arquivo!\n");
+}
+
+int registarDadosUc(Uc* unidade_curricular){
+    char opcao;
+
+    do
+    {
+        printf("\nEntre com o ID da unidade curricular: \n");
+        scanf("%d",&(unidade_curricular->idUnidadeCurricular));
+        printf("Entre com o codigo da unidade curricular: \n");
+        scanf("%d",unidade_curricular->codigoUnidadeCurricular);
+        printf("Entre com o NOME da unidade curricular: \n");
+        fflush(stdin);
+        scanf("%49[^\n]",unidade_curricular->nomeUnidadeCurricular);
+        if(strlen(unidade_curricular->nomeUnidadeCurricular)>50)
+        {
+            printf("Nome da UC possui mais de que 50 caractees.\n");
+        }
+        else
+        {
+            printf("\nEntre com o ano da Unidade Curricullar \n");
+            scanf("%5s",unidade_curricular->anoCurricular);
+            printf("\nEntre com o semestre da Unidade Curricullar \n");
+            scanf("%10s",unidade_curricular->semestreCurricular);
+            printf("Entre com o ects da Unidade Curricular:\n");
+            scanf("%d",&(unidade_curricular->ectsUnidadeCurricular));
+            printf("Deseja inserir outra Unidade Curricular?\n");
+            scanf(" %c", &opcao);//aqui é importante ainda dar um enter após escolher o n ou s.
+        }
+        
+
+    } while (opcao != 'n' && opcao != 'N');
+    return 0;
+    
 }
