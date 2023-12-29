@@ -307,3 +307,20 @@ int menuAvaliacao()
     
     return opcao;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+int telaAgradecimento(){
+
+    printf("++++++++++++++++++++++++++");
+}
