@@ -2,10 +2,15 @@
 triple:          'arm64-apple-darwin'
 binary-path:     '/Users/altamir/Documents/Faculdade/Fundamentos_Programacao/ProjetoFaculdade/output/projetofaculdade'
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003440, symSize: 0x168 }
-  - { offsetInCU: 0x4E, offset: 0x4E, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003440, symSize: 0x168 }
-  - { offsetInCU: 0x93, offset: 0x93, size: 0x8, addend: 0x0, symName: _registarDadosEstudantes, symObjAddr: 0x178, symBinAddr: 0x1000035B8, symSize: 0x19C }
-  - { offsetInCU: 0xC9, offset: 0xC9, size: 0x8, addend: 0x0, symName: _gravacaoDados, symObjAddr: 0x314, symBinAddr: 0x100003754, symSize: 0xCC }
-  - { offsetInCU: 0xFB, offset: 0xFB, size: 0x8, addend: 0x0, symName: _registarDadosUc, symObjAddr: 0x3E0, symBinAddr: 0x100003820, symSize: 0x1B4 }
-  - { offsetInCU: 0x131, offset: 0x131, size: 0x8, addend: 0x0, symName: _menu, symObjAddr: 0x594, symBinAddr: 0x1000039D4, symSize: 0xC0 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100002D68, symSize: 0x230 }
+  - { offsetInCU: 0x5A, offset: 0x5A, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100002D68, symSize: 0x230 }
+  - { offsetInCU: 0x9F, offset: 0x9F, size: 0x8, addend: 0x0, symName: _registarDadosEstudantes, symObjAddr: 0x244, symBinAddr: 0x100002FAC, symSize: 0x19C }
+  - { offsetInCU: 0xD5, offset: 0xD5, size: 0x8, addend: 0x0, symName: _gravacaoDados, symObjAddr: 0x3E0, symBinAddr: 0x100003148, symSize: 0xCC }
+  - { offsetInCU: 0x107, offset: 0x107, size: 0x8, addend: 0x0, symName: _registarDadosUc, symObjAddr: 0x4AC, symBinAddr: 0x100003214, symSize: 0x1B4 }
+  - { offsetInCU: 0x13D, offset: 0x13D, size: 0x8, addend: 0x0, symName: _registarAvaliacao, symObjAddr: 0x660, symBinAddr: 0x1000033C8, symSize: 0x144 }
+  - { offsetInCU: 0x18B, offset: 0x18B, size: 0x8, addend: 0x0, symName: _mostrarAvaliacoes, symObjAddr: 0x7A4, symBinAddr: 0x10000350C, symSize: 0xB0 }
+  - { offsetInCU: 0x1CE, offset: 0x1CE, size: 0x8, addend: 0x0, symName: _menu, symObjAddr: 0x854, symBinAddr: 0x1000035BC, symSize: 0xCC }
+  - { offsetInCU: 0x1F6, offset: 0x1F6, size: 0x8, addend: 0x0, symName: _calcularMedia, symObjAddr: 0x920, symBinAddr: 0x100003688, symSize: 0xC0 }
+  - { offsetInCU: 0x24C, offset: 0x24C, size: 0x8, addend: 0x0, symName: _menuAvaliacao, symObjAddr: 0x9E0, symBinAddr: 0x100003748, symSize: 0xCC }
+  - { offsetInCU: 0x276, offset: 0x276, size: 0x8, addend: 0x0, symName: _telaAgradecimento, symObjAddr: 0xAAC, symBinAddr: 0x100003814, symSize: 0x28 }
 ...

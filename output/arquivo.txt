@@ -28,3 +28,4 @@
 28;2239972;Vasco Fernandes;4542;vascofernandes28@my.ipleiria.pt
 29;2239971;Rita Pereira;4543;ritapereira29@my.ipleiria.pt
 30;2239970;André Oliveira;4544;andreoliveira30@my.ipleiria.pt
+54,2232399,Nome novo Estudante,4575,box.estudandenovodenovo@gmail.com
