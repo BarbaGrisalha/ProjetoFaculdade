@@ -5,27 +5,6 @@
 
 
 //Definição da estrutura
-
-typedef struct 
-{
-    int idEstudante;
-    int nrEstudante;
-    char nomeEstudante[50];
-    int codigoCursoEstudante;
-    char emailEstudante[50];
-    
-}Estudante;
-
-typedef struct 
-{
-    int idUnidadeCurricular;
-    int codigoUnidadeCurricular[7];
-    char nomeUnidadeCurricular[50];
-    char anoCurricular[6];
-    char semestreCurricular[11];
-    int ectsUnidadeCurricular;
-}Uc;
-
 typedef struct 
 {
    int idAvaliacao;
@@ -37,13 +16,40 @@ typedef struct
    int classificacaoFinal;
 }Avaliacao;
 
+typedef struct 
+{
+    int idEstudante;
+    int nrEstudante;
+    char nomeEstudante[50];
+    int codigoCursoEstudante;
+    char emailEstudante[50];
+    int totalAvaliacoes;
+    Avaliacao avaliacoes[50];
+    
+}Estudante;
+
+typedef struct 
+{
+    int idUnidadeCurricular;
+    int codigoUnidadeCurricular[7];
+    char nomeUnidadeCurricular[50];
+    char anoCurricular[6];
+    char semestreCurricular[11];
+    int ectsUnidadeCurricular;
+     int totalAvaliacoes;
+    Avaliacao avaliacoes[50];
+}Uc;
+
+
+
 //###### função declarada   ######
 int menu();
 void desenhar(int,int);
 int registarDadosEstudantes(Estudante* estudante);
 void gravacaoDados(Estudante* estudante);
 int registarDadosUc(Uc* unidade_curricular);
-
+void registarAvaliacao(Estudante* estudante, Uc* unidade_curricular);
+void mostrarAvaliacoes(Estudante* estudante);
 
 //###### MAIN    ######
 int main ()
@@ -52,6 +58,7 @@ int main ()
     //system("clear");
     Estudante estudante; //Variável para armazenar os dados do estudante
     Uc unidade_curricular; //Varíavel para guardar as informações da Unidade Curricular
+   
     
     do
     {
@@ -72,9 +79,16 @@ int main ()
                 break;
             case 3:
                 printf("Selecionou 3\n");
+                registarAvaliacao(&estudante,&unidade_curricular);
                 fflush(stdin);
                 getchar();
                 break;
+            case 4:
+                printf("Selecionou 3\n");
+                mostrarAvaliacoes(&estudante);
+                fflush(stdin);
+                getchar();
+                break;   
             case 0:
                 exit(0);
                 system("cls");
@@ -109,6 +123,7 @@ int menu()
         printf("\t\t\t#  [1] Registar Dados Estudante         #\n");
         printf("\t\t\t#  [2] Unidades Curriculares - UC       #\n");
         printf("\t\t\t#  [3] Avaliações                       #\n");
+        printf("\t\t\t#  [4] Mostrar Avaliações               #\n");
         printf("\t\t\t#  [0] Sair                             #\n");
         printf("\t\t\t#                                       #\n");
         printf("\t\t\t#      Insira a opção desejada:         #\n");
@@ -197,5 +212,51 @@ int registarDadosUc(Uc* unidade_curricular){
 
     } while (opcao != 'n' && opcao != 'N');
     return 0;
+    
+}
+
+void registarAvaliacao(Estudante* estudante, Uc* unidade_curricular)// Passando parâmetros por referência 
+ {
+if(estudante->totalAvaliacoes <50 && unidade_curricular->totalAvaliacoes <50){
+    Avaliacao novaAvaliacao;
+
+    printf("\n Entre com o ID da avaliação : \n");
+    scanf("%d",&novaAvaliacao.idAvaliacao);
+    // Preencha os detalhes da avaliação, como a nota, a data, etc.
+
+        // Adiciona a nova avaliação ao estudante e à unidade curricular
+        estudante->avaliacoes[estudante->totalAvaliacoes] = novaAvaliacao;
+        unidade_curricular->avaliacoes[unidade_curricular->totalAvaliacoes] = novaAvaliacao;
+
+        // Incrementa o contador de avaliações
+        estudante->totalAvaliacoes++;
+        unidade_curricular->totalAvaliacoes++;
+         printf("Avaliacao registrada com sucesso!\n");
+}
+else {
+        printf("Nao foi possivel adicionar mais avaliacoes. Limite atingido.\n");
+    }
+
+}
+
+float calcularMedia(Estudante* estudante){
+    float soma = 0;
+
+    for(int i= 0;i < estudante->totalAvaliacoes;i++){
+        soma += estudante->avaliacoes[i].classificacaoFinal;
+    }
+    if(estudante->totalAvaliacoes >0){
+        return soma/estudante->totalAvaliacoes;
+    }else{
+        return 0.0;
+    }
+}
+
+void mostrarAvaliacoes(Estudante* estudante){
+    printf("\nAvaliacoes do estudante:\n");
+    for (int i = 0; i < estudante->totalAvaliacoes; i++)
+    {
+        printf("ID Avaliacao: %d, Nota: %d\n",estudante->avaliacoes[i].idAvaliacao, estudante->avaliacoes[i].classificacaoFinal);
+    }
     
 }
