@@ -156,6 +156,29 @@ int menu()
     return opcao;
 }
 
+int menuAvaliacao()
+{
+    //Registar e consultar os dados das avaliações;
+    int opcao;
+    system("clear");
+  
+        printf("\t\t\t#########################################\n");
+        printf("\t\t\t#                                       #\n");
+        printf("\t\t\t#         Menu Avaliacoes               #\n");
+        printf("\t\t\t#                                       #\n");
+        printf("\t\t\t#  [1] Registar Dados Avaliacoes        #\n");
+        printf("\t\t\t#  [2] Mostrar Avaliacoes               #\n");
+        printf("\t\t\t#  [3] N/U - Nao Utilizada              #\n");
+        printf("\t\t\t#  [4] N/U - Nao Utilizada              #\n");
+        printf("\t\t\t#  [0] Voltar                           #\n");
+        printf("\t\t\t#                                       #\n");
+        printf("\t\t\t#      Insira a opção desejada:         #\n");
+        printf("\t\t\t#########################################\n");
+        scanf("%d", &opcao);
+    
+    return opcao;
+}
+
 int registarDadosEstudantes(Estudante* estudante)
 {
     char opcao;
@@ -282,30 +305,6 @@ void mostrarAvaliacoes(Estudante* estudante){
         printf("ID Avaliacao: %d, Nota: %d\n",estudante->avaliacoes[i].idAvaliacao, estudante->avaliacoes[i].classificacaoFinal);
     }
     
-}
-
-
-int menuAvaliacao()
-{
-    //Registar e consultar os dados das avaliações;
-    int opcao;
-    system("clear");
-  
-        printf("\t\t\t#########################################\n");
-        printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#         Menu Avaliacoes               #\n");
-        printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#  [1] Registar Dados Avaliacoes        #\n");
-        printf("\t\t\t#  [2] Mostrar Avaliacoes               #\n");
-        printf("\t\t\t#  [3] N/U - Nao Utilizada              #\n");
-        printf("\t\t\t#  [4] N/U - Nao Utilizada              #\n");
-        printf("\t\t\t#  [0] Voltar                           #\n");
-        printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#      Insira a opção desejada:         #\n");
-        printf("\t\t\t#########################################\n");
-        scanf("%d", &opcao);
-    
-    return opcao;
 }
 
 
