@@ -50,6 +50,7 @@ void gravacaoDados(Estudante* estudante);
 int registarDadosUc(Uc* unidade_curricular);
 void registarAvaliacao(Estudante* estudante, Uc* unidade_curricular);
 void mostrarAvaliacoes(Estudante* estudante);
+int menuAvaliacao();
 
 //###### MAIN    ######
 int main ()
@@ -79,13 +80,13 @@ int main ()
                 break;
             case 3:
                 printf("Selecionou 3\n");
-                registarAvaliacao(&estudante,&unidade_curricular);
+                menuAvaliacao();
+                //registarAvaliacao(&estudante,&unidade_curricular);
                 fflush(stdin);
                 getchar();
                 break;
             case 4:
                 printf("Selecionou 3\n");
-                mostrarAvaliacoes(&estudante);
                 fflush(stdin);
                 getchar();
                 break;   
@@ -106,6 +107,28 @@ int main ()
     } while (opcao !=0);
     
     gravacaoDados(&estudante);
+
+    do
+    {
+       opcao = menuAvaliacao();
+       switch (opcao)
+       {
+       case 1/* constant-expression */:
+        registarAvaliacao(&estudante,&unidade_curricular);
+        break;
+
+        case 2:
+        mostrarAvaliacoes(&estudante);
+        break;
+
+        case 0:
+        menu();
+       
+       default:
+        break;
+       } /* code */
+    } while (opcao !=0);
+    
     return 0;
 }
 
@@ -118,12 +141,12 @@ int menu()
   
         printf("\t\t\t#########################################\n");
         printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#                  Menu                 #\n");
+        printf("\t\t\t#        Menu Principal                 #\n");
         printf("\t\t\t#                                       #\n");
         printf("\t\t\t#  [1] Registar Dados Estudante         #\n");
         printf("\t\t\t#  [2] Unidades Curriculares - UC       #\n");
         printf("\t\t\t#  [3] Avaliações                       #\n");
-        printf("\t\t\t#  [4] Mostrar Avaliações               #\n");
+        printf("\t\t\t#  [4] N/U - Nao utilizado              #\n");
         printf("\t\t\t#  [0] Sair                             #\n");
         printf("\t\t\t#                                       #\n");
         printf("\t\t\t#      Insira a opção desejada:         #\n");
@@ -259,4 +282,28 @@ void mostrarAvaliacoes(Estudante* estudante){
         printf("ID Avaliacao: %d, Nota: %d\n",estudante->avaliacoes[i].idAvaliacao, estudante->avaliacoes[i].classificacaoFinal);
     }
     
+}
+
+
+int menuAvaliacao()
+{
+    //Registar e consultar os dados das avaliações;
+    int opcao;
+    system("clear");
+  
+        printf("\t\t\t#########################################\n");
+        printf("\t\t\t#                                       #\n");
+        printf("\t\t\t#         Menu Avaliacoes               #\n");
+        printf("\t\t\t#                                       #\n");
+        printf("\t\t\t#  [1] Registar Dados Avaliacoes        #\n");
+        printf("\t\t\t#  [2] Mostrar Avaliacoes               #\n");
+        printf("\t\t\t#  [3] N/U - Nao Utilizada              #\n");
+        printf("\t\t\t#  [4] N/U - Nao Utilizada              #\n");
+        printf("\t\t\t#  [0] Voltar                           #\n");
+        printf("\t\t\t#                                       #\n");
+        printf("\t\t\t#      Insira a opção desejada:         #\n");
+        printf("\t\t\t#########################################\n");
+        scanf("%d", &opcao);
+    
+    return opcao;
 }
