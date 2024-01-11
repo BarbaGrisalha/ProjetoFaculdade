@@ -2,15 +2,22 @@
 triple:          'arm64-apple-darwin'
 binary-path:     '/Users/altamir/Documents/Faculdade/Fundamentos_Programacao/ProjetoFaculdade/output/projetofaculdade'
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100002D68, symSize: 0x230 }
-  - { offsetInCU: 0x5A, offset: 0x5A, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100002D68, symSize: 0x230 }
-  - { offsetInCU: 0x9F, offset: 0x9F, size: 0x8, addend: 0x0, symName: _registarDadosEstudantes, symObjAddr: 0x244, symBinAddr: 0x100002FAC, symSize: 0x19C }
-  - { offsetInCU: 0xD5, offset: 0xD5, size: 0x8, addend: 0x0, symName: _gravacaoDados, symObjAddr: 0x3E0, symBinAddr: 0x100003148, symSize: 0xCC }
-  - { offsetInCU: 0x107, offset: 0x107, size: 0x8, addend: 0x0, symName: _registarDadosUc, symObjAddr: 0x4AC, symBinAddr: 0x100003214, symSize: 0x1B4 }
-  - { offsetInCU: 0x13D, offset: 0x13D, size: 0x8, addend: 0x0, symName: _registarAvaliacao, symObjAddr: 0x660, symBinAddr: 0x1000033C8, symSize: 0x144 }
-  - { offsetInCU: 0x18B, offset: 0x18B, size: 0x8, addend: 0x0, symName: _mostrarAvaliacoes, symObjAddr: 0x7A4, symBinAddr: 0x10000350C, symSize: 0xB0 }
-  - { offsetInCU: 0x1CE, offset: 0x1CE, size: 0x8, addend: 0x0, symName: _menu, symObjAddr: 0x854, symBinAddr: 0x1000035BC, symSize: 0xCC }
-  - { offsetInCU: 0x1F6, offset: 0x1F6, size: 0x8, addend: 0x0, symName: _calcularMedia, symObjAddr: 0x920, symBinAddr: 0x100003688, symSize: 0xC0 }
-  - { offsetInCU: 0x24C, offset: 0x24C, size: 0x8, addend: 0x0, symName: _menuAvaliacao, symObjAddr: 0x9E0, symBinAddr: 0x100003748, symSize: 0xCC }
-  - { offsetInCU: 0x276, offset: 0x276, size: 0x8, addend: 0x0, symName: _telaAgradecimento, symObjAddr: 0xAAC, symBinAddr: 0x100003814, symSize: 0x28 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x1000028A4, symSize: 0x2B0 }
+  - { offsetInCU: 0x5A, offset: 0x5A, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x1000028A4, symSize: 0x2B0 }
+  - { offsetInCU: 0x9F, offset: 0x9F, size: 0x8, addend: 0x0, symName: _gravacaoDados, symObjAddr: 0x2C4, symBinAddr: 0x100002B68, symSize: 0xCC }
+  - { offsetInCU: 0xD4, offset: 0xD4, size: 0x8, addend: 0x0, symName: _registarAvaliacao, symObjAddr: 0x390, symBinAddr: 0x100002C34, symSize: 0x144 }
+  - { offsetInCU: 0x126, offset: 0x126, size: 0x8, addend: 0x0, symName: _mostrarAvaliacoes, symObjAddr: 0x4D4, symBinAddr: 0x100002D78, symSize: 0xB0 }
+  - { offsetInCU: 0x169, offset: 0x169, size: 0x8, addend: 0x0, symName: _registarDadosUc, symObjAddr: 0x584, symBinAddr: 0x100002E28, symSize: 0x1B8 }
+  - { offsetInCU: 0x1B1, offset: 0x1B1, size: 0x8, addend: 0x0, symName: _menuPrincipal, symObjAddr: 0x73C, symBinAddr: 0x100002FE0, symSize: 0xC4 }
+  - { offsetInCU: 0x1D9, offset: 0x1D9, size: 0x8, addend: 0x0, symName: _menuAvaliacao, symObjAddr: 0x800, symBinAddr: 0x1000030A4, symSize: 0xB8 }
+  - { offsetInCU: 0x201, offset: 0x201, size: 0x8, addend: 0x0, symName: _menuDadosEstudantes, symObjAddr: 0x8B8, symBinAddr: 0x10000315C, symSize: 0xB8 }
+  - { offsetInCU: 0x229, offset: 0x229, size: 0x8, addend: 0x0, symName: _menuUnidadeCurricular, symObjAddr: 0x970, symBinAddr: 0x100003214, symSize: 0xB8 }
+  - { offsetInCU: 0x251, offset: 0x251, size: 0x8, addend: 0x0, symName: _menuEstatistico, symObjAddr: 0xA28, symBinAddr: 0x1000032CC, symSize: 0xB8 }
+  - { offsetInCU: 0x279, offset: 0x279, size: 0x8, addend: 0x0, symName: _registarDadosEstudantes, symObjAddr: 0xAE0, symBinAddr: 0x100003384, symSize: 0x19C }
+  - { offsetInCU: 0x2B2, offset: 0x2B2, size: 0x8, addend: 0x0, symName: _calcularMedia, symObjAddr: 0xC7C, symBinAddr: 0x100003520, symSize: 0xC0 }
+  - { offsetInCU: 0x308, offset: 0x308, size: 0x8, addend: 0x0, symName: _calculoEstatistico, symObjAddr: 0xD3C, symBinAddr: 0x1000035E0, symSize: 0x4 }
+  - { offsetInCU: 0x31E, offset: 0x31E, size: 0x8, addend: 0x0, symName: _totalEctsAprovadosEstudante, symObjAddr: 0xD40, symBinAddr: 0x1000035E4, symSize: 0x4 }
+  - { offsetInCU: 0x334, offset: 0x334, size: 0x8, addend: 0x0, symName: _mediaClassificacaoUC, symObjAddr: 0xD44, symBinAddr: 0x1000035E8, symSize: 0x4 }
+  - { offsetInCU: 0x34A, offset: 0x34A, size: 0x8, addend: 0x0, symName: _percentagemEctsAprovadosSemestre, symObjAddr: 0xD48, symBinAddr: 0x1000035EC, symSize: 0x4 }
+  - { offsetInCU: 0x360, offset: 0x360, size: 0x8, addend: 0x0, symName: _telaAgradecimento, symObjAddr: 0xD4C, symBinAddr: 0x1000035F0, symSize: 0x20 }
 ...
