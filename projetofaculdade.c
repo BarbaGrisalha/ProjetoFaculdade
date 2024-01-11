@@ -44,11 +44,13 @@ int menuPrincipal();
 void desenhar(int,int);
 int registarDadosEstudantes(Estudante* estudante);
 void gravacaoDados(Estudante* estudante);
-int registarDadosUc(Uc* unidade_curricular);
+int registarDadosUc(Estudante* estudante,Uc* unidade_curricular);
 void registarAvaliacao(Estudante* estudante, Uc* unidade_curricular);
 void mostrarAvaliacoes(Estudante* estudante);
 int menuAvaliacao();
 int menuDadosEstudantes();
+int menuUnidadeCurricular();
+int menuEstatistico();
 
 //####  03 - MAIN    #### 
 int main ()
@@ -58,33 +60,35 @@ int main ()
     Estudante estudante; //Variável para armazenar os dados do estudante
     Uc unidade_curricular; //Varíavel para guardar as informações da Unidade Curricular
    
-    
+    //### 03.1 Menu Principal
     do
     {
         opcao=menuPrincipal();
         switch (opcao)
         {
             case 1:
-                printf("Registar Dados Estudante :");
+                printf("Registar Dados Estudante :\n");
                 menuDadosEstudantes();
                 fflush(stdin);
                 getchar();
                 break;
             case 2:
-                printf("Selecionou 2\n");
-                registarDadosUc(&unidade_curricular);
+                printf("Registar Unidade Curricular :\n");
+                menuUnidadeCurricular();
+                //registarDadosUc(&unidade_curricular);
                 fflush(stdin);
                 getchar();
                 break;
             case 3:
-                printf("Selecionou 3\n");
+                printf("Registar Avaliacoes :\n");
                 menuAvaliacao();
                 //registarAvaliacao(&estudante,&unidade_curricular);
                 fflush(stdin);
                 getchar();
                 break;
             case 4:
-                printf("Selecionou 3\n");
+                printf("Estatistico :\n");
+                menuEstatistico();
                 fflush(stdin);
                 getchar();
                 break;   
@@ -106,9 +110,7 @@ int main ()
     
     gravacaoDados(&estudante);
 
-   // Menu
-
-
+//### 03.1.03 Menu Registar Avaliações
     do
     {
        opcao = menuAvaliacao();
@@ -129,6 +131,33 @@ int main ()
         break;
        } /* code */
     } while (opcao !=0);
+
+
+//### 03.1.01 Menu Registar Dados Estudante
+
+//### 03.1.02 Menu Registar Unidade Curricular
+ do
+    {
+       opcao = menuUnidadeCurricular();
+       switch (opcao)
+       {
+       case 1:
+        registarDadosUc(&estudante,&unidade_curricular);
+        break;
+
+        case 2:
+        mostrarAvaliacoes(&estudante);
+        break;
+
+        case 0:
+        menuPrincipal();
+       
+       default:
+        break;
+       } /* code */
+    } while (opcao !=0);
+
+//### 03.1.04 Estatisticas
     
     return 0;
 }
@@ -280,7 +309,6 @@ void gravacaoDados(Estudante* estudante) {
         printf("Erro ao abrir o arquivo!\n");
         return;
     }
-
     // Gravando os dados no arquivo
     fprintf(arquivoDados, "%d,%d,%s,%d,%s\n", estudante->idEstudante, estudante->nrEstudante, estudante->nomeEstudante, estudante->codigoCursoEstudante, estudante->emailEstudante);
 
@@ -289,7 +317,7 @@ void gravacaoDados(Estudante* estudante) {
     printf("Dados gravados com sucesso no arquivo!\n");
 }
 
-int registarDadosUc(Uc* unidade_curricular){
+int registarDadosUc(Estudante* estudante,Uc* unidade_curricular){
     char opcao;
 
     do
@@ -316,11 +344,8 @@ int registarDadosUc(Uc* unidade_curricular){
             printf("Deseja inserir outra Unidade Curricular?\n");
             scanf(" %c", &opcao);//aqui é importante ainda dar um enter após escolher o n ou s.
         }
-        
-
     } while (opcao != 'n' && opcao != 'N');
-    return 0;
-    
+    return 0;   
 }
 
 void registarAvaliacao(Estudante* estudante, Uc* unidade_curricular)// Passando parâmetros por referência 
@@ -380,6 +405,7 @@ void calculoEstatistico()
 void totalEctsAprovadosEstudante(){
 
 }
+
 void mediaClassificacaoUC(){
 
 }
@@ -389,17 +415,8 @@ void percentagemEctsAprovadosSemestre(){
 
 }
 
-
-
-
-
-
-
-
-
-
-
 int telaAgradecimento(){
 
     printf("++++++++++++++++++++++++++");
+    return 0;
 }
