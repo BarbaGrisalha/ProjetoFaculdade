@@ -67,27 +67,23 @@ int main ()
         switch (opcao)
         {
             case 1:
-                printf("Registar Dados Estudante :\n");
                 menuDadosEstudantes();
                 fflush(stdin);
                 getchar();
                 break;
             case 2:
-                printf("Registar Unidade Curricular :\n");
                 menuUnidadeCurricular();
                 //registarDadosUc(&unidade_curricular);
                 fflush(stdin);
                 getchar();
                 break;
             case 3:
-                printf("Registar Avaliacoes :\n");
                 menuAvaliacao();
                 //registarAvaliacao(&estudante,&unidade_curricular);
                 fflush(stdin);
                 getchar();
                 break;
             case 4:
-                printf("Estatistico :\n");
                 menuEstatistico();
                 fflush(stdin);
                 getchar();
@@ -95,7 +91,6 @@ int main ()
             case 0:
                 exit(0);
                 system("cls");
-                //printf("Selecionou 0\n");
                 fflush(stdin);
                 getchar();
                 break;       
