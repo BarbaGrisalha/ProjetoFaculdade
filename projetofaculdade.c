@@ -254,7 +254,7 @@ int menuEstatistico()
 }
 //#### 05 - FUNÇÕES DE REGISTOS ####
 
-int registarDadosEstudantes(Estudante* estudante)
+int registarDadosEstudantes(Estudante* estudante)//Passando por paremetro a variável estudante da Struct Estudante
 {
     char opcao;
     do{
@@ -286,7 +286,7 @@ int registarDadosEstudantes(Estudante* estudante)
 void gravacaoDados(Estudante* estudante) {
     FILE *arquivoDados; // Criando a variável ponteiro para o arquivo
 
-    arquivoDados = fopen("arquivo.txt", "a"); // Abrindo o arquivo no modo de adição ("a")
+    arquivoDados = fopen("arquivo.bin", "a"); // Abrindo o arquivo no modo de adição ("a")
 
     // Verificando se o arquivo foi aberto corretamente
     if (arquivoDados == NULL) {
