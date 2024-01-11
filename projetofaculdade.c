@@ -73,13 +73,11 @@ int main ()
                 break;
             case 2:
                 menuUnidadeCurricular();
-                //registarDadosUc(&unidade_curricular);
                 fflush(stdin);
                 getchar();
                 break;
             case 3:
                 menuAvaliacao();
-                //registarAvaliacao(&estudante,&unidade_curricular);
                 fflush(stdin);
                 getchar();
                 break;
@@ -111,20 +109,17 @@ int main ()
        opcao = menuAvaliacao();
        switch (opcao)
        {
-       case 1/* constant-expression */:
+       case 1:
         registarAvaliacao(&estudante,&unidade_curricular);
         break;
-
         case 2:
         mostrarAvaliacoes(&estudante);
         break;
-
         case 0:
         menuPrincipal();
-       
-       default:
+        default:
         break;
-       } /* code */
+       } 
     } while (opcao !=0);
 
 
