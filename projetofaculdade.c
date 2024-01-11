@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-//Definição da estrutura
+//####  01 - DEFINICAO DE ESTRUTURAS    #### 
 typedef struct 
 {
    int idAvaliacao;
@@ -40,10 +39,8 @@ typedef struct
     Avaliacao avaliacoes[50];
 }Uc;
 
-
-
-//###### função declarada   ######
-int menu();
+//#### 02 - DECLARACAO DE FUNCOES  #### 
+int menuPrincipal();
 void desenhar(int,int);
 int registarDadosEstudantes(Estudante* estudante);
 void gravacaoDados(Estudante* estudante);
@@ -51,8 +48,9 @@ int registarDadosUc(Uc* unidade_curricular);
 void registarAvaliacao(Estudante* estudante, Uc* unidade_curricular);
 void mostrarAvaliacoes(Estudante* estudante);
 int menuAvaliacao();
+int menuDadosEstudantes();
 
-//###### MAIN    ######
+//####  03 - MAIN    #### 
 int main ()
 {
     int opcao;
@@ -63,13 +61,12 @@ int main ()
     
     do
     {
-        opcao=menu();
+        opcao=menuPrincipal();
         switch (opcao)
         {
             case 1:
                 printf("Registar Dados Estudante :");
-                registarDadosEstudantes(&estudante);//Passando o endereço da variável
-                gravacaoDados(&estudante);//Chamando aqui a função com o endereço da variável
+                menuDadosEstudantes();
                 fflush(stdin);
                 getchar();
                 break;
@@ -77,6 +74,7 @@ int main ()
                 printf("Selecionou 2\n");
                 registarDadosUc(&unidade_curricular);
                 fflush(stdin);
+                getchar();
                 break;
             case 3:
                 printf("Selecionou 3\n");
@@ -108,6 +106,9 @@ int main ()
     
     gravacaoDados(&estudante);
 
+   // Menu
+
+
     do
     {
        opcao = menuAvaliacao();
@@ -122,7 +123,7 @@ int main ()
         break;
 
         case 0:
-        menu();
+        menuPrincipal();
        
        default:
         break;
@@ -132,21 +133,20 @@ int main ()
     return 0;
 }
 
-//#### funções criada ####
-int menu()
+//#### 04 - FUNÇÕES DE MENUS #### 
+int menuPrincipal()
 {
     //Registar e consultar os dados dos estudantes;
     int opcao;
     system("clear");
   
         printf("\t\t\t#########################################\n");
-        printf("\t\t\t#                                       #\n");
         printf("\t\t\t#        Menu Principal                 #\n");
         printf("\t\t\t#                                       #\n");
         printf("\t\t\t#  [1] Registar Dados Estudante         #\n");
-        printf("\t\t\t#  [2] Unidades Curriculares - UC       #\n");
-        printf("\t\t\t#  [3] Avaliações                       #\n");
-        printf("\t\t\t#  [4] N/U - Nao utilizado              #\n");
+        printf("\t\t\t#  [2] Registar Unidade Curricular      #\n");
+        printf("\t\t\t#  [3] Registar Avaliações              #\n");
+        printf("\t\t\t#  [4] Estatisticas                     #\n");
         printf("\t\t\t#  [0] Sair                             #\n");
         printf("\t\t\t#                                       #\n");
         printf("\t\t\t#      Insira a opção desejada:         #\n");
@@ -163,14 +163,12 @@ int menuAvaliacao()
     system("clear");
   
         printf("\t\t\t#########################################\n");
-        printf("\t\t\t#                                       #\n");
         printf("\t\t\t#         Menu Avaliacoes               #\n");
         printf("\t\t\t#                                       #\n");
         printf("\t\t\t#  [1] Registar Dados Avaliacoes        #\n");
         printf("\t\t\t#  [2] Mostrar Avaliacoes               #\n");
-        printf("\t\t\t#  [3] N/U - Nao Utilizada              #\n");
-        printf("\t\t\t#  [4] N/U - Nao Utilizada              #\n");
-        printf("\t\t\t#  [0] Voltar                           #\n");
+        printf("\t\t\t#  [3] Alterar Avaliacoes               #\n");
+        printf("\t\t\t#  [0] Menu Principal                   #\n");
         printf("\t\t\t#                                       #\n");
         printf("\t\t\t#      Insira a opção desejada:         #\n");
         printf("\t\t\t#########################################\n");
@@ -178,6 +176,70 @@ int menuAvaliacao()
     
     return opcao;
 }
+
+int menuDadosEstudantes()
+{
+    //Registar e consultar os dados das avaliações;
+    int opcao;
+    system("clear");
+  
+        printf("\t\t\t#########################################\n");
+        printf("\t\t\t#         Menu Dados Estudantes         #\n");
+        printf("\t\t\t#                                       #\n");
+        printf("\t\t\t#  [1] Registar Dados Estudantes        #\n");
+        printf("\t\t\t#  [2] Mostrar Dados Estudantes         #\n");
+        printf("\t\t\t#  [3] Alterar Dados Estudantes         #\n");
+        printf("\t\t\t#  [0] Menu Principal                   #\n");
+        printf("\t\t\t#                                       #\n");
+        printf("\t\t\t#      Insira a opção desejada:         #\n");
+        printf("\t\t\t#########################################\n");
+        scanf("%d", &opcao);
+    
+    return opcao;
+}
+
+int menuUnidadeCurricular()
+{
+    //Registar e consultar os dados das avaliações;
+    int opcao;
+    system("clear");
+  
+        printf("\t\t\t#########################################\n");
+        printf("\t\t\t#         Menu UC-Unidade Curricular    #\n");
+        printf("\t\t\t#                                       #\n");
+        printf("\t\t\t#  [1] Registar Dados U.C.              #\n");
+        printf("\t\t\t#  [2] Mostrar Dados U.C.               #\n");
+        printf("\t\t\t#  [3] Alterar Dados U.C.               #\n");
+        printf("\t\t\t#  [0] Menu Principal                   #\n");
+        printf("\t\t\t#                                       #\n");
+        printf("\t\t\t#      Insira a opção desejada:         #\n");
+        printf("\t\t\t#########################################\n");
+        scanf("%d", &opcao);
+    
+    return opcao;
+}
+
+int menuEstatistico()
+{
+    //Registar e consultar os dados das avaliações;
+    int opcao;
+    system("clear");
+  
+        printf("\t\t\t#########################################\n");
+        printf("\t\t\t#         Menu Dados Estatisticos       #\n");
+        printf("\t\t\t#                                       #\n");
+        printf("\t\t\t#  [1] Total ECTS Aprovados             #\n");
+        printf("\t\t\t#  [2] Media Classificação p/ U.C.      #\n");
+        printf("\t\t\t#  [3] Percentagem Aprov. p/ Semestre   #\n");
+        printf("\t\t\t#  [0] Menu Principal                   #\n");
+        printf("\t\t\t#                                       #\n");
+        printf("\t\t\t#      Insira a opção desejada:         #\n");
+        printf("\t\t\t#########################################\n");
+        scanf("%d", &opcao);
+    
+    return opcao;
+}
+//#### 05 - FUNÇÕES DE REGISTOS ####
 
 int registarDadosEstudantes(Estudante* estudante)
 {
@@ -285,6 +347,8 @@ else {
 
 }
 
+//#### 06 - FUNÇÕES DE CALCULOS ####
+
 float calcularMedia(Estudante* estudante){
     float soma = 0;
 
@@ -307,7 +371,23 @@ void mostrarAvaliacoes(Estudante* estudante){
     
 }
 
+void calculoEstatistico()
+{
 
+    
+}
+
+void totalEctsAprovadosEstudante(){
+
+}
+void mediaClassificacaoUC(){
+
+}
+
+void percentagemEctsAprovadosSemestre(){
+
+
+}
 
 
 
