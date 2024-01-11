@@ -56,7 +56,6 @@ int menuEstatistico();
 int main ()
 {
     int opcao;
-    //system("clear");
     Estudante estudante; //Variável para armazenar os dados do estudante
     Uc unidade_curricular; //Varíavel para guardar as informações da Unidade Curricular
    
