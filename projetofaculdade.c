@@ -154,7 +154,6 @@ int main ()
 //#### 04 - FUNÇÕES DE MENUS #### 
 int menuPrincipal()
 {
-    //Registar e consultar os dados dos estudantes;
     int opcao;
     system("clear");
   
@@ -176,7 +175,6 @@ int menuPrincipal()
 
 int menuAvaliacao()
 {
-    //Registar e consultar os dados das avaliações;
     int opcao;
     system("clear");
   
@@ -197,7 +195,6 @@ int menuAvaliacao()
 
 int menuDadosEstudantes()
 {
-    //Registar e consultar os dados das avaliações;
     int opcao;
     system("clear");
   
@@ -218,7 +215,6 @@ int menuDadosEstudantes()
 
 int menuUnidadeCurricular()
 {
-    //Registar e consultar os dados das avaliações;
     int opcao;
     system("clear");
   
@@ -239,7 +235,6 @@ int menuUnidadeCurricular()
 
 int menuEstatistico()
 {
-    //Registar e consultar os dados das avaliações;
     int opcao;
     system("clear");
   
