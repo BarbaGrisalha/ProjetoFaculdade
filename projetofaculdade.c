@@ -73,8 +73,9 @@ int main ()
                 break;
             case 2:
                 lerDadosEstudantes(&estudante);
-                //fflush(stdin);
-                //getchar();
+                //system("cls");
+                fflush(stdin);
+                getchar();
                 break;
             case 3:
                 //menuAvaliacao();
@@ -101,7 +102,7 @@ int main ()
         
     } while (opcao !=0);
     
-    gravacaoDados(&estudante);
+    
     
     return 0;
 }
@@ -125,7 +126,7 @@ int menuPrincipal()
         printf("\t\t\t#      Insira a opção desejada:           #\n");
         printf("\t\t\t###########################################\n");
         scanf("%d", &opcao);
-    
+    system('clear');
     return opcao;
 }
 
@@ -157,17 +158,18 @@ int registarDadosEstudantes(t_estudante* estudante)//Passando por paremetro a va
             scanf(" %c", &opcao);//aqui é importante ainda dar um enter após escolher o n ou s.
         }
     } while (opcao !='n' && opcao !='N');
+   gravacaoDados(estudante);
     return 0 ;
 }
 
 void gravacaoDados(t_estudante* estudante) {
-    FILE *arquivoDados = fopen("arquivoEstudante.bin","wb"); // Criando a variável ponteiro para o arquivo
+    FILE *arquivoDados = fopen("arquivoEstudante.bin","ab"); // Criando a variável ponteiro para o arquivo
 
     if(arquivoDados == NULL){
-        perror("Erro na abertura do arquivo!");//TESTE DE PERROR EM E VEZ DE PRINTF
+        printf("Erro na abertura do arquivo!");//TESTE DE PERROR EM E VEZ DE PRINTF
         return;
     }
-
+     
     // Gravando os dados no arquivo
    // fprintf(arquivoDados, "%d,%d,%s,%d,%s\n", estudante->idEstudante, estudante->nrEstudante, estudante->nomeEstudante, estudante->codigoCursoEstudante, estudante->emailEstudante);
     fwrite(estudante,sizeof(t_estudante),1,arquivoDados);
@@ -175,30 +177,63 @@ void gravacaoDados(t_estudante* estudante) {
 
     printf("Dados gravados com sucesso no arquivo!\n");
 }
-
+int compararID(const void *a, const void *b)
+{
+    const t_estudante *estudanteA = (const t_estudante *)a;
+    const t_estudante *estudanteB = (const t_estudante *)b;
+    return estudanteA->idEstudante - estudanteB->idEstudante;
+}
 void lerDadosEstudantes(t_estudante* estudante)
 {
     FILE *arquivoDados = fopen("arquivoEstudante.bin","rb");
-    system('clear');
+    
     if(arquivoDados == NULL)
     {
         printf("\nArquivo nao encontrado ou corrompido!");
         return;
     }
-    
+    // Lê todos os registos em um vetor
+    t_estudante registros[100]; //Supondo um numero máximo de 100 registos
+    int totalRegistos = 0;
 
-    while (fread(estudante,sizeof(t_estudante),1,arquivoDados)==1)
+    system("clear");
+   // t_estudante tempEstudante;
+
+    while (fread(&registros[totalRegistos],sizeof(t_estudante),1,arquivoDados)>0)
     {
-       printf("ID : %d ", estudante->idEstudante);
-       printf("Numero : %d \n",estudante->nrEstudante);
-       printf("Nome Estudande: %c",estudante->nomeEstudante);
-       printf("Email : %s ",estudante->emailEstudante);
-       printf("Código Curso %d ", estudante->codigoCursoEstudante);
-
+        totalRegistos++;
+        
     }
+    qsort(registros,totalRegistos,sizeof(t_estudante), compararID);
 
+
+system('clear');
+
+for (int i = 0; i < totalRegistos; i++)
+{
+    /*
+    printf("\t\t\nID : %d \n", (estudante->idEstudante));
+       printf("Nome Estudande: %s ",(estudante->nomeEstudante));
+       printf("|| Numero : %d \n",estudante->nrEstudante);
+       printf("Código Curso %d ", estudante->codigoCursoEstudante);
+       printf("|| Email : %s \n",estudante->emailEstudante);
+       printf("------------------------------------------------");
+
+    */
+        printf("\t\t\nID : %d \n", registros[i].idEstudante);
+        printf("Nome Estudande: %s ", registros[i].nomeEstudante);
+        printf("|| Numero : %d \n", registros[i].nrEstudante);
+        printf("Código Curso %d ", registros[i].codigoCursoEstudante);
+        printf("|| Email : %s \n", registros[i].emailEstudante);
+        printf("------------------------------------------------");
+
+    
+}
     fclose(arquivoDados);
 }
+//Função de comparação para depois ordenar o id
+
+
 /*
 int registarDadosUc(t_estudante* estudante,t_uc* unidade_curricular){
     char opcao;

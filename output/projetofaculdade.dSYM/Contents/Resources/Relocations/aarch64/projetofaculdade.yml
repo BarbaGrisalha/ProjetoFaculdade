@@ -2,10 +2,11 @@
 triple:          'arm64-apple-darwin'
 binary-path:     '/Users/altamir/Documents/Faculdade/Fundamentos_Programacao/ProjetoFaculdade/output/projetofaculdade'
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003548, symSize: 0x158 }
-  - { offsetInCU: 0x66, offset: 0x66, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003548, symSize: 0x158 }
-  - { offsetInCU: 0xBA, offset: 0xBA, size: 0x8, addend: 0x0, symName: _registarDadosEstudantes, symObjAddr: 0x16C, symBinAddr: 0x1000036B4, symSize: 0x19C }
-  - { offsetInCU: 0xF0, offset: 0xF0, size: 0x8, addend: 0x0, symName: _lerDadosEstudantes, symObjAddr: 0x308, symBinAddr: 0x100003850, symSize: 0x134 }
-  - { offsetInCU: 0x122, offset: 0x122, size: 0x8, addend: 0x0, symName: _gravacaoDados, symObjAddr: 0x43C, symBinAddr: 0x100003984, symSize: 0x84 }
-  - { offsetInCU: 0x154, offset: 0x154, size: 0x8, addend: 0x0, symName: _menuPrincipal, symObjAddr: 0x4C0, symBinAddr: 0x100003A08, symSize: 0xD0 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003378, symSize: 0x160 }
+  - { offsetInCU: 0x164, offset: 0x164, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003378, symSize: 0x160 }
+  - { offsetInCU: 0x1B8, offset: 0x1B8, size: 0x8, addend: 0x0, symName: _registarDadosEstudantes, symObjAddr: 0x174, symBinAddr: 0x1000034EC, symSize: 0x1A4 }
+  - { offsetInCU: 0x1EE, offset: 0x1EE, size: 0x8, addend: 0x0, symName: _lerDadosEstudantes, symObjAddr: 0x318, symBinAddr: 0x100003690, symSize: 0x264 }
+  - { offsetInCU: 0x258, offset: 0x258, size: 0x8, addend: 0x0, symName: _menuPrincipal, symObjAddr: 0x57C, symBinAddr: 0x1000038F4, symSize: 0xDC }
+  - { offsetInCU: 0x280, offset: 0x280, size: 0x8, addend: 0x0, symName: _gravacaoDados, symObjAddr: 0x658, symBinAddr: 0x1000039D0, symSize: 0x84 }
+  - { offsetInCU: 0x2B2, offset: 0x2B2, size: 0x8, addend: 0x0, symName: _compararID, symObjAddr: 0x6DC, symBinAddr: 0x100003A54, symSize: 0x38 }
 ...
