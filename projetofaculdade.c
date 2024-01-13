@@ -38,12 +38,14 @@ typedef struct
     int totalAvaliacoes;
 }t_uc;
 
+
+#define MAX_ESTUDANTES 10
 //#### 02 - DECLARACAO DE FUNCOES  #### 
 int menuPrincipal();
 void desenhar(int,int);
-int registarDadosEstudantes(t_estudante* estudante);
+int registarDadosEstudantes(t_estudante* estudante,int* proximoIdEstudante, t_estudante* registros, int* totalRegistros);
 void gravacaoDados(t_estudante* estudante);
-void lerDadosEstudantes(t_estudante* estudante);
+void lerDadosEstudantes();//t_estudante* estudante
 int registarDadosUc(t_estudante* estudante,t_uc* unidade_curricular);
 void registarAvaliacao(t_estudante* estudante, t_uc* unidade_curricular);
 void mostrarAvaliacoes(t_estudante* estudante);
@@ -52,14 +54,17 @@ int menuDadosEstudantes(t_estudante* estudante);
 int menuUnidadeCurricular();
 int menuEstatistico();
 
+
 //####  03 - MAIN    #### 
 int main ()
 {
     int opcao;
     t_estudante estudante; //Variável para armazenar os dados do estudante
-    t_uc unidade_curricular; //Varíavel para guardar as informações da Unidade Curricular
-    t_avaliacao avaliacao; //Variável para guardar as informações d avaliação
-   
+    //t_uc unidade_curricular; //Varíavel para guardar as informações da Unidade Curricular
+    //t_avaliacao avaliacao; //Variável para guardar as informações d avaliação
+   int proximoIdEstudante = 1;
+   t_estudante registros[MAX_ESTUDANTES];
+   int totalRegistros=0;
     //### 03.1 Menu Principal
     do
     {
@@ -67,12 +72,12 @@ int main ()
         switch (opcao)
         {
             case 1:
-                registarDadosEstudantes(&estudante);//DONE
+                registarDadosEstudantes(&estudante,&proximoIdEstudante,registros, &totalRegistros);//DONE
                 fflush(stdin);
                 getchar();
                 break;
             case 2:
-                lerDadosEstudantes(&estudante);
+                lerDadosEstudantes(registros, totalRegistros);// &estudante
                 //system("cls");
                 fflush(stdin);
                 getchar();
@@ -126,18 +131,35 @@ int menuPrincipal()
         printf("\t\t\t#      Insira a opção desejada:           #\n");
         printf("\t\t\t###########################################\n");
         scanf("%d", &opcao);
-    system('clear');
+    system("clear");
     return opcao;
 }
 
 //#### 05 - FUNÇÕES DE REGISTOS ####
+int gerarIdEstudante(int* proximoIdEstudante, t_estudante* registros,int totalRegistros)
+{
+    int novoId=(*proximoIdEstudante)++;
+    for (int i = 0; i < totalRegistros; i++)
+    {
+        if(registros[i].idEstudante == novoId)
+        {
+            return gerarIdEstudante(proximoIdEstudante,registros,totalRegistros);
+        }
+    }
+    
+   
 
-int registarDadosEstudantes(t_estudante* estudante)//Passando por paremetro a variável estudante da Struct Estudante
+
+    return novoId;
+}
+
+int registarDadosEstudantes(t_estudante* estudante,int* proximoIdEstudante, t_estudante* registros, int* totalRegistros)//Passando por paremetro a variável estudante da Struct Estudante
 {
     char opcao;
-    do{
-        printf("\nEntre com o ID do estudante: \n");
-        scanf("%d",&(estudante->idEstudante));
+    do{ 
+        estudante->idEstudante =gerarIdEstudante(proximoIdEstudante, registros,*totalRegistros);
+        //printf("\nEntre com o ID do estudante: \n");
+        //scanf("%d",&(estudante->idEstudante));
         printf("Entre com o NR do estudante: \n");
         scanf("%d",&(estudante->nrEstudante));
         printf("Entre com o NOME do estudante: \n");
@@ -168,10 +190,8 @@ void gravacaoDados(t_estudante* estudante) {
     if(arquivoDados == NULL){
         printf("Erro na abertura do arquivo!");//TESTE DE PERROR EM E VEZ DE PRINTF
         return;
-    }
-     
+    } 
     // Gravando os dados no arquivo
-   // fprintf(arquivoDados, "%d,%d,%s,%d,%s\n", estudante->idEstudante, estudante->nrEstudante, estudante->nomeEstudante, estudante->codigoCursoEstudante, estudante->emailEstudante);
     fwrite(estudante,sizeof(t_estudante),1,arquivoDados);
     fclose(arquivoDados); // Fechando o arquivo
 
@@ -183,7 +203,7 @@ int compararID(const void *a, const void *b)
     const t_estudante *estudanteB = (const t_estudante *)b;
     return estudanteA->idEstudante - estudanteB->idEstudante;
 }
-void lerDadosEstudantes(t_estudante* estudante)
+void lerDadosEstudantes(t_estudante* registros,int totalRegistros)//t_estudante* estudante
 {
     FILE *arquivoDados = fopen("arquivoEstudante.bin","rb");
     
@@ -193,42 +213,23 @@ void lerDadosEstudantes(t_estudante* estudante)
         return;
     }
     // Lê todos os registos em um vetor
-    t_estudante registros[100]; //Supondo um numero máximo de 100 registos
+   // t_estudante registros[MAX_ESTUDANTES]; //Supondo um numero máximo de 100 registos
     int totalRegistos = 0;
-
     system("clear");
-   // t_estudante tempEstudante;
-
     while (fread(&registros[totalRegistos],sizeof(t_estudante),1,arquivoDados)>0)
     {
-        totalRegistos++;
-        
+        totalRegistos++;     
     }
     qsort(registros,totalRegistos,sizeof(t_estudante), compararID);
-
-
-system('clear');
-
-for (int i = 0; i < totalRegistos; i++)
-{
-    /*
-    printf("\t\t\nID : %d \n", (estudante->idEstudante));
-       printf("Nome Estudande: %s ",(estudante->nomeEstudante));
-       printf("|| Numero : %d \n",estudante->nrEstudante);
-       printf("Código Curso %d ", estudante->codigoCursoEstudante);
-       printf("|| Email : %s \n",estudante->emailEstudante);
-       printf("------------------------------------------------");
-
-    */
-        printf("\t\t\nID : %d \n", registros[i].idEstudante);
-        printf("Nome Estudande: %s ", registros[i].nomeEstudante);
-        printf("|| Numero : %d \n", registros[i].nrEstudante);
-        printf("Código Curso %d ", registros[i].codigoCursoEstudante);
-        printf("|| Email : %s \n", registros[i].emailEstudante);
-        printf("------------------------------------------------");
-
-    
-}
+    for (int i = 0; i < totalRegistos; i++)
+    {
+            printf("\t\t\nID : %d \n", registros[i].idEstudante);
+            printf("Nome Estudande: %s ", registros[i].nomeEstudante);
+            printf("|| Numero : %d \n", registros[i].nrEstudante);
+            printf("Código Curso %d ", registros[i].codigoCursoEstudante);
+            printf("|| Email : %s \n", registros[i].emailEstudante);
+            printf("------------------------------------------------"); 
+    }
     fclose(arquivoDados);
 }
 //Função de comparação para depois ordenar o id

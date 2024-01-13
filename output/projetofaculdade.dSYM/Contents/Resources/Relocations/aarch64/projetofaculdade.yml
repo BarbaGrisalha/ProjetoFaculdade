@@ -2,11 +2,12 @@
 triple:          'arm64-apple-darwin'
 binary-path:     '/Users/altamir/Documents/Faculdade/Fundamentos_Programacao/ProjetoFaculdade/output/projetofaculdade'
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003378, symSize: 0x160 }
-  - { offsetInCU: 0x164, offset: 0x164, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003378, symSize: 0x160 }
-  - { offsetInCU: 0x1B8, offset: 0x1B8, size: 0x8, addend: 0x0, symName: _registarDadosEstudantes, symObjAddr: 0x174, symBinAddr: 0x1000034EC, symSize: 0x1A4 }
-  - { offsetInCU: 0x1EE, offset: 0x1EE, size: 0x8, addend: 0x0, symName: _lerDadosEstudantes, symObjAddr: 0x318, symBinAddr: 0x100003690, symSize: 0x264 }
-  - { offsetInCU: 0x258, offset: 0x258, size: 0x8, addend: 0x0, symName: _menuPrincipal, symObjAddr: 0x57C, symBinAddr: 0x1000038F4, symSize: 0xDC }
-  - { offsetInCU: 0x280, offset: 0x280, size: 0x8, addend: 0x0, symName: _gravacaoDados, symObjAddr: 0x658, symBinAddr: 0x1000039D0, symSize: 0x84 }
-  - { offsetInCU: 0x2B2, offset: 0x2B2, size: 0x8, addend: 0x0, symName: _compararID, symObjAddr: 0x6DC, symBinAddr: 0x100003A54, symSize: 0x38 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003324, symSize: 0x180 }
+  - { offsetInCU: 0x158, offset: 0x158, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003324, symSize: 0x180 }
+  - { offsetInCU: 0x1B9, offset: 0x1B9, size: 0x8, addend: 0x0, symName: _registarDadosEstudantes, symObjAddr: 0x194, symBinAddr: 0x1000034B8, symSize: 0x1A8 }
+  - { offsetInCU: 0x219, offset: 0x219, size: 0x8, addend: 0x0, symName: _menuPrincipal, symObjAddr: 0x33C, symBinAddr: 0x100003660, symSize: 0xDC }
+  - { offsetInCU: 0x241, offset: 0x241, size: 0x8, addend: 0x0, symName: _gerarIdEstudante, symObjAddr: 0x418, symBinAddr: 0x10000373C, symSize: 0xBC }
+  - { offsetInCU: 0x2AF, offset: 0x2AF, size: 0x8, addend: 0x0, symName: _gravacaoDados, symObjAddr: 0x4D4, symBinAddr: 0x1000037F8, symSize: 0x84 }
+  - { offsetInCU: 0x2E1, offset: 0x2E1, size: 0x8, addend: 0x0, symName: _compararID, symObjAddr: 0x558, symBinAddr: 0x10000387C, symSize: 0x38 }
+  - { offsetInCU: 0x333, offset: 0x333, size: 0x8, addend: 0x0, symName: _lerDadosEstudantes, symObjAddr: 0x590, symBinAddr: 0x1000038B4, symSize: 0x200 }
 ...
