@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,21 +37,17 @@ typedef struct
     int totalAvaliacoes;
 }t_uc;
 
-
-#define MAX_ESTUDANTES 10
+#define MAX_ESTUDANTES 150
+#define MAX_UNIDADES_CURRICULARES 18
+#define MAX_AVALIACOES 5000
 //#### 02 - DECLARACAO DE FUNCOES  #### 
-int menuPrincipal();
-void desenhar(int,int);
+int menuPrincipal(void);
 int registarDadosEstudantes(t_estudante* estudante,int* proximoIdEstudante, t_estudante* registros, int* totalRegistros);
 void gravacaoDados(t_estudante* estudante);
-void lerDadosEstudantes();//t_estudante* estudante
-int registarDadosUc(t_estudante* estudante,t_uc* unidade_curricular);
-void registarAvaliacao(t_estudante* estudante, t_uc* unidade_curricular);
-void mostrarAvaliacoes(t_estudante* estudante);
-int menuAvaliacao();
-int menuDadosEstudantes(t_estudante* estudante);
-int menuUnidadeCurricular();
-int menuEstatistico();
+void lerDadosEstudantes(t_estudante* registros, int totalRegistros);
+int registarDadosUnidadeCurricular(t_uc* unidadeCurricular,int* totalUCs);
+void gravacaoDadosUnidadeCurricular(t_uc* unidadeCurricular);
+void lerDadosUnidadeCurricular(t_uc* unidadeCurricular);
 
 
 //####  03 - MAIN    #### 
@@ -60,11 +55,12 @@ int main ()
 {
     int opcao;
     t_estudante estudante; //Variável para armazenar os dados do estudante
-    //t_uc unidade_curricular; //Varíavel para guardar as informações da Unidade Curricular
+    t_uc unidadeCurricular; //Varíavel para guardar as informações da Unidade Curricular
     //t_avaliacao avaliacao; //Variável para guardar as informações d avaliação
    int proximoIdEstudante = 1;
    t_estudante registros[MAX_ESTUDANTES];
    int totalRegistros=0;
+   int totalUCs=0;
     //### 03.1 Menu Principal
     do
     {
@@ -77,18 +73,18 @@ int main ()
                 getchar();
                 break;
             case 2:
-                lerDadosEstudantes(registros, totalRegistros);// &estudante
+                lerDadosEstudantes(registros, totalRegistros);// DONE
                 //system("cls");
                 fflush(stdin);
                 getchar();
                 break;
             case 3:
-                //menuAvaliacao();
+                registarDadosUnidadeCurricular(&unidadeCurricular,&totalUCs);
                 fflush(stdin);
                 getchar();
                 break;
             case 4:
-                ///menuEstatistico();
+                lerDadosUnidadeCurricular(&unidadeCurricular);
                 fflush(stdin);
                 getchar();
                 break;   
@@ -135,7 +131,7 @@ int menuPrincipal()
     return opcao;
 }
 
-//#### 05 - FUNÇÕES DE REGISTOS ####
+//#### 05 - FUNÇÕES DE REGISTOS DE ESTUDANTE ####
 int gerarIdEstudante(int* proximoIdEstudante, t_estudante* registros,int totalRegistros)
 {
     int novoId=(*proximoIdEstudante)++;
@@ -158,8 +154,6 @@ int registarDadosEstudantes(t_estudante* estudante,int* proximoIdEstudante, t_es
     char opcao;
     do{ 
         estudante->idEstudante =gerarIdEstudante(proximoIdEstudante, registros,*totalRegistros);
-        //printf("\nEntre com o ID do estudante: \n");
-        //scanf("%d",&(estudante->idEstudante));
         printf("Entre com o NR do estudante: \n");
         scanf("%d",&(estudante->nrEstudante));
         printf("Entre com o NOME do estudante: \n");
@@ -183,7 +177,6 @@ int registarDadosEstudantes(t_estudante* estudante,int* proximoIdEstudante, t_es
    gravacaoDados(estudante);
     return 0 ;
 }
-
 void gravacaoDados(t_estudante* estudante) {
     FILE *arquivoDados = fopen("arquivoEstudante.bin","ab"); // Criando a variável ponteiro para o arquivo
 
@@ -233,75 +226,109 @@ void lerDadosEstudantes(t_estudante* registros,int totalRegistros)//t_estudante*
     fclose(arquivoDados);
 }
 //Função de comparação para depois ordenar o id
+//#### 05 - FUNÇÕES DE REGISTOS DE ESTUDANTE ####
+int gerarIdUnidadeCurricular( t_uc* ucs, int totalUCs){
+    int novoId=totalUCs++;
+    for (int  i = 0; i < totalUCs; i++)
+    {
+        if(ucs[i].idUnidadeCurricular == novoId)
+        {
+            return gerarIdUnidadeCurricular(ucs,totalUCs);
+        }
+    }
+    return novoId;
+}
 
-
-/*
-int registarDadosUc(t_estudante* estudante,t_uc* unidade_curricular){
+int registarDadosUnidadeCurricular(t_uc* unidadeCurricular, int* totalUCs)
+{
     char opcao;
-
     do
     {
-        printf("\nEntre com o ID da unidade curricular: \n");
-        scanf("%d",&(unidade_curricular->idUnidadeCurricular));
-        printf("Entre com o codigo da unidade curricular: \n");
-        scanf("%d",unidade_curricular->codigoUnidadeCurricular);
+        unidadeCurricular->idUnidadeCurricular = gerarIdUnidadeCurricular(unidadeCurricular, *totalUCs);
+
+        printf("Entre com o CÓDIGO da unidade curricular: \n");
+        scanf("%d", unidadeCurricular->codigoUnidadeCurricular);
         printf("Entre com o NOME da unidade curricular: \n");
         fflush(stdin);
-        scanf("%49[^\n]",unidade_curricular->nomeUnidadeCurricular);
-        if(strlen(unidade_curricular->nomeUnidadeCurricular)>50)
+        scanf("%49[^\n]", unidadeCurricular->nomeUnidadeCurricular);
+        if (strlen(unidadeCurricular->nomeUnidadeCurricular) > 50)
         {
-            printf("Nome da UC possui mais de que 50 caractees.\n");
+            printf("Nome da unidade curricular possui mais de 50 caracteres.\n");
         }
         else
         {
-            printf("\nEntre com o ano da Unidade Curricullar \n");
-            scanf("%5s",unidade_curricular->anoCurricular);
-            printf("\nEntre com o semestre da Unidade Curricullar \n");
-            scanf("%10s",unidade_curricular->semestreCurricular);
-            printf("Entre com o ects da Unidade Curricular:\n");
-            scanf("%d",&(unidade_curricular->ectsUnidadeCurricular));
-            printf("Deseja inserir outra Unidade Curricular?\n");
-            scanf(" %c", &opcao);//aqui é importante ainda dar um enter após escolher o n ou s.
+            printf("Entre com o ANO CURRICULAR: \n");
+            scanf("%5s", unidadeCurricular->anoCurricular);
+            printf("Entre com o SEMESTRE CURRICULAR: \n");
+            scanf("%10s", unidadeCurricular->semestreCurricular);
+            printf("Entre com os ECTS da unidade curricular: \n");
+            scanf("%d", &unidadeCurricular->ectsUnidadeCurricular);
+            printf("Deseja inserir outra unidade curricular?\n");
+            scanf(" %c", &opcao);
         }
-    } while (opcao != 'n' && opcao != 'N');
-    return 0;   
+    } while (opcao!= 'n' && opcao !='N');
+
+    gravacaoDadosUnidadeCurricular(unidadeCurricular);
+    return 0;
+    
 }
 
-void registarAvaliacao(t_estudante* estudante, t_uc*  unidade_curricular)// Passando parâmetros por referência 
- {
+void gravacaoDadosUnidadeCurricular(t_uc* unidadeCurricular)
+{
+    FILE* arquivoDadosUC = fopen("arquivoUC.bin","ab");
 
+    if(arquivoDadosUC == NULL)
+    {
+        printf("Erro abertura arquivo!!!!\n");
+        return;
+    }
+    fwrite(unidadeCurricular, sizeof(t_uc), 1,arquivoDadosUC);
+    fclose(arquivoDadosUC);
+    printf("Dados gravados com sucesso em ficheiro");
+}
+
+int compararIDUnidadeCurricular(const void* a, const void* b)
+{
+    const t_uc* ucA = (const t_uc*)a;
+    const t_uc* ucB = (const t_uc*)b;
+    return ucA->idUnidadeCurricular - ucB->idUnidadeCurricular;
+}
+
+void lerDadosUnidadeCurricular(t_uc* unidadeCurricular)
+{
+    FILE* arquivoDadosUC = fopen("arquivoUC.bin", "rb");
+
+    if (arquivoDadosUC == NULL)
+    {
+        printf("\nArquivo nao encontrado ou corrompido!\n");
+        return;
+    }
+
+    int totalUCsLidos = 0;
+    system("clear");
+    while (fread(&unidadeCurricular[totalUCsLidos], sizeof(t_uc), 1, arquivoDadosUC) > 0)
+    {
+        totalUCsLidos++;
+    }
+
+    qsort(unidadeCurricular, totalUCsLidos, sizeof(t_uc), compararIDUnidadeCurricular);
+
+    for (int i = 0; i < totalUCsLidos; i++)
+    {
+        printf("\t\t\nID Unidade Curricular: %d \n", unidadeCurricular[i].idUnidadeCurricular);
+        printf("Código Unidade Curricular: %d \n", unidadeCurricular[i].codigoUnidadeCurricular);
+        printf("Nome Unidade Curricular: %s \n", unidadeCurricular[i].nomeUnidadeCurricular);
+        printf("Ano Curricular: %s \n", unidadeCurricular[i].anoCurricular);
+        printf("Semestre Curricular: %s \n", unidadeCurricular[i].semestreCurricular);
+        printf("ECTS Unidade Curricular: %d \n", unidadeCurricular[i].ectsUnidadeCurricular);
+        printf("------------------------------------------------\n");
+    }
+
+    fclose(arquivoDadosUC);
 }
 
 //#### 06 - FUNÇÕES DE CALCULOS ####
-
-float calcularMedia(t_estudante* estudante){
-   
-}
-
-void mostrarAvaliacoes(t_estudante* estudante){
-   
-    
-}
-
-void calculoEstatistico()
-{
-
-    
-}
-
-void totalEctsAprovadosEstudante(){
-
-}
-
-void mediaClassificacaoUC(){
-
-}
-
-void percentagemEctsAprovadosSemestre(){
-
-
-}
-
+/*
 int telaAgradecimento(){
 
     printf("++++++++++++++++++++++++++");
