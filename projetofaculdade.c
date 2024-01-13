@@ -13,7 +13,7 @@ typedef struct
    char epocaAvaliacao[40];
    char dataAvaliacao[10];
    int classificacaoFinal;
-}Avaliacao;
+}t_avaliacao;
 
 typedef struct 
 {
@@ -23,9 +23,9 @@ typedef struct
     int codigoCursoEstudante;
     char emailEstudante[50];
     int totalAvaliacoes;
-    Avaliacao avaliacoes[50];
+    t_avaliacao avaliacoes[50];
     
-}Estudante;
+}t_estudante;
 
 typedef struct 
 {
@@ -35,20 +35,20 @@ typedef struct
     char anoCurricular[6];
     char semestreCurricular[11];
     int ectsUnidadeCurricular;
-     int totalAvaliacoes;
-    Avaliacao avaliacoes[50];
-}Uc;
+    int totalAvaliacoes;
+}t_uc;
 
 //#### 02 - DECLARACAO DE FUNCOES  #### 
 int menuPrincipal();
 void desenhar(int,int);
-int registarDadosEstudantes(Estudante* estudante);
-void gravacaoDados(Estudante* estudante);
-int registarDadosUc(Estudante* estudante,Uc* unidade_curricular);
-void registarAvaliacao(Estudante* estudante, Uc* unidade_curricular);
-void mostrarAvaliacoes(Estudante* estudante);
+int registarDadosEstudantes(t_estudante* estudante);
+void gravacaoDados(t_estudante* estudante);
+void lerDadosEstudantes(t_estudante* estudante);
+int registarDadosUc(t_estudante* estudante,t_uc* unidade_curricular);
+void registarAvaliacao(t_estudante* estudante, t_uc* unidade_curricular);
+void mostrarAvaliacoes(t_estudante* estudante);
 int menuAvaliacao();
-int menuDadosEstudantes();
+int menuDadosEstudantes(t_estudante* estudante);
 int menuUnidadeCurricular();
 int menuEstatistico();
 
@@ -56,8 +56,9 @@ int menuEstatistico();
 int main ()
 {
     int opcao;
-    Estudante estudante; //Variável para armazenar os dados do estudante
-    Uc unidade_curricular; //Varíavel para guardar as informações da Unidade Curricular
+    t_estudante estudante; //Variável para armazenar os dados do estudante
+    t_uc unidade_curricular; //Varíavel para guardar as informações da Unidade Curricular
+    t_avaliacao avaliacao; //Variável para guardar as informações d avaliação
    
     //### 03.1 Menu Principal
     do
@@ -66,22 +67,22 @@ int main ()
         switch (opcao)
         {
             case 1:
-                menuDadosEstudantes();
+                registarDadosEstudantes(&estudante);//DONE
                 fflush(stdin);
                 getchar();
                 break;
             case 2:
-                menuUnidadeCurricular();
-                fflush(stdin);
-                getchar();
+                lerDadosEstudantes(&estudante);
+                //fflush(stdin);
+                //getchar();
                 break;
             case 3:
-                menuAvaliacao();
+                //menuAvaliacao();
                 fflush(stdin);
                 getchar();
                 break;
             case 4:
-                menuEstatistico();
+                ///menuEstatistico();
                 fflush(stdin);
                 getchar();
                 break;   
@@ -101,52 +102,6 @@ int main ()
     } while (opcao !=0);
     
     gravacaoDados(&estudante);
-
-//### 03.1.03 Menu Registar Avaliações
-    do
-    {
-       opcao = menuAvaliacao();
-       switch (opcao)
-       {
-       case 1:
-        registarAvaliacao(&estudante,&unidade_curricular);
-        break;
-        case 2:
-        mostrarAvaliacoes(&estudante);
-        break;
-        case 0:
-        menuPrincipal();
-        default:
-        break;
-       } 
-    } while (opcao !=0);
-
-
-//### 03.1.01 Menu Registar Dados Estudante
-
-//### 03.1.02 Menu Registar Unidade Curricular
- do
-    {
-       opcao = menuUnidadeCurricular();
-       switch (opcao)
-       {
-       case 1:
-        registarDadosUc(&estudante,&unidade_curricular);
-        break;
-
-        case 2:
-        mostrarAvaliacoes(&estudante);
-        break;
-
-        case 0:
-        menuPrincipal();
-       
-       default:
-        break;
-       } /* code */
-    } while (opcao !=0);
-
-//### 03.1.04 Estatisticas
     
     return 0;
 }
@@ -157,104 +112,26 @@ int menuPrincipal()
     int opcao;
     system("clear");
   
-        printf("\t\t\t#########################################\n");
-        printf("\t\t\t#        Menu Principal                 #\n");
-        printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#  [1] Registar Dados Estudante         #\n");
-        printf("\t\t\t#  [2] Registar Unidade Curricular      #\n");
-        printf("\t\t\t#  [3] Registar Avaliações              #\n");
-        printf("\t\t\t#  [4] Estatisticas                     #\n");
-        printf("\t\t\t#  [0] Sair                             #\n");
-        printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#      Insira a opção desejada:         #\n");
-        printf("\t\t\t#########################################\n");
+        printf("\t\t\t###########################################\n");
+        printf("\t\t\t#        Menu Principal                   #\n");
+        printf("\t\t\t#  [1] Registar Dados Estudante           #\n");
+        printf("\t\t\t#  [2] Consultar Dados Estudante          #\n");
+        printf("\t\t\t#  [3] Registar Unidade Curricular        #\n");
+        printf("\t\t\t#  [4] Consultar Unidade Curricular       #\n");
+        printf("\t\t\t#  [5] Registar Avaliações                #\n");
+        printf("\t\t\t#  [6] Consultar Avaliações               #\n");
+        printf("\t\t\t#  [7] Estatisticas                       #\n");
+        printf("\t\t\t#  [0] Sair                               #\n");
+        printf("\t\t\t#      Insira a opção desejada:           #\n");
+        printf("\t\t\t###########################################\n");
         scanf("%d", &opcao);
     
     return opcao;
 }
 
-int menuAvaliacao()
-{
-    int opcao;
-    system("clear");
-  
-        printf("\t\t\t#########################################\n");
-        printf("\t\t\t#         Menu Avaliacoes               #\n");
-        printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#  [1] Registar Dados Avaliacoes        #\n");
-        printf("\t\t\t#  [2] Mostrar Avaliacoes               #\n");
-        printf("\t\t\t#  [3] Alterar Avaliacoes               #\n");
-        printf("\t\t\t#  [0] Menu Principal                   #\n");
-        printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#      Insira a opção desejada:         #\n");
-        printf("\t\t\t#########################################\n");
-        scanf("%d", &opcao);
-    
-    return opcao;
-}
-
-int menuDadosEstudantes()
-{
-    int opcao;
-    system("clear");
-  
-        printf("\t\t\t#########################################\n");
-        printf("\t\t\t#         Menu Dados Estudantes         #\n");
-        printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#  [1] Registar Dados Estudantes        #\n");
-        printf("\t\t\t#  [2] Mostrar Dados Estudantes         #\n");
-        printf("\t\t\t#  [3] Alterar Dados Estudantes         #\n");
-        printf("\t\t\t#  [0] Menu Principal                   #\n");
-        printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#      Insira a opção desejada:         #\n");
-        printf("\t\t\t#########################################\n");
-        scanf("%d", &opcao);
-    
-    return opcao;
-}
-
-int menuUnidadeCurricular()
-{
-    int opcao;
-    system("clear");
-  
-        printf("\t\t\t#########################################\n");
-        printf("\t\t\t#         Menu UC-Unidade Curricular    #\n");
-        printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#  [1] Registar Dados U.C.              #\n");
-        printf("\t\t\t#  [2] Mostrar Dados U.C.               #\n");
-        printf("\t\t\t#  [3] Alterar Dados U.C.               #\n");
-        printf("\t\t\t#  [0] Menu Principal                   #\n");
-        printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#      Insira a opção desejada:         #\n");
-        printf("\t\t\t#########################################\n");
-        scanf("%d", &opcao);
-    
-    return opcao;
-}
-
-int menuEstatistico()
-{
-    int opcao;
-    system("clear");
-  
-        printf("\t\t\t#########################################\n");
-        printf("\t\t\t#         Menu Dados Estatisticos       #\n");
-        printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#  [1] Total ECTS Aprovados             #\n");
-        printf("\t\t\t#  [2] Media Classificação p/ U.C.      #\n");
-        printf("\t\t\t#  [3] Percentagem Aprov. p/ Semestre   #\n");
-        printf("\t\t\t#  [0] Menu Principal                   #\n");
-        printf("\t\t\t#                                       #\n");
-        printf("\t\t\t#      Insira a opção desejada:         #\n");
-        printf("\t\t\t#########################################\n");
-        scanf("%d", &opcao);
-    
-    return opcao;
-}
 //#### 05 - FUNÇÕES DE REGISTOS ####
 
-int registarDadosEstudantes(Estudante* estudante)//Passando por paremetro a variável estudante da Struct Estudante
+int registarDadosEstudantes(t_estudante* estudante)//Passando por paremetro a variável estudante da Struct Estudante
 {
     char opcao;
     do{
@@ -283,25 +160,47 @@ int registarDadosEstudantes(Estudante* estudante)//Passando por paremetro a vari
     return 0 ;
 }
 
-void gravacaoDados(Estudante* estudante) {
-    FILE *arquivoDados; // Criando a variável ponteiro para o arquivo
+void gravacaoDados(t_estudante* estudante) {
+    FILE *arquivoDados = fopen("arquivoEstudante.bin","wb"); // Criando a variável ponteiro para o arquivo
 
-    arquivoDados = fopen("arquivo.bin", "a"); // Abrindo o arquivo no modo de adição ("a")
-
-    // Verificando se o arquivo foi aberto corretamente
-    if (arquivoDados == NULL) {
-        printf("Erro ao abrir o arquivo!\n");
+    if(arquivoDados == NULL){
+        perror("Erro na abertura do arquivo!");//TESTE DE PERROR EM E VEZ DE PRINTF
         return;
     }
-    // Gravando os dados no arquivo
-    fprintf(arquivoDados, "%d,%d,%s,%d,%s\n", estudante->idEstudante, estudante->nrEstudante, estudante->nomeEstudante, estudante->codigoCursoEstudante, estudante->emailEstudante);
 
+    // Gravando os dados no arquivo
+   // fprintf(arquivoDados, "%d,%d,%s,%d,%s\n", estudante->idEstudante, estudante->nrEstudante, estudante->nomeEstudante, estudante->codigoCursoEstudante, estudante->emailEstudante);
+    fwrite(estudante,sizeof(t_estudante),1,arquivoDados);
     fclose(arquivoDados); // Fechando o arquivo
 
     printf("Dados gravados com sucesso no arquivo!\n");
 }
 
-int registarDadosUc(Estudante* estudante,Uc* unidade_curricular){
+void lerDadosEstudantes(t_estudante* estudante)
+{
+    FILE *arquivoDados = fopen("arquivoEstudante.bin","rb");
+    system('clear');
+    if(arquivoDados == NULL)
+    {
+        printf("\nArquivo nao encontrado ou corrompido!");
+        return;
+    }
+    
+
+    while (fread(estudante,sizeof(t_estudante),1,arquivoDados)==1)
+    {
+       printf("ID : %d ", estudante->idEstudante);
+       printf("Numero : %d \n",estudante->nrEstudante);
+       printf("Nome Estudande: %c",estudante->nomeEstudante);
+       printf("Email : %s ",estudante->emailEstudante);
+       printf("Código Curso %d ", estudante->codigoCursoEstudante);
+
+    }
+
+    fclose(arquivoDados);
+}
+/*
+int registarDadosUc(t_estudante* estudante,t_uc* unidade_curricular){
     char opcao;
 
     do
@@ -332,51 +231,19 @@ int registarDadosUc(Estudante* estudante,Uc* unidade_curricular){
     return 0;   
 }
 
-void registarAvaliacao(Estudante* estudante, Uc* unidade_curricular)// Passando parâmetros por referência 
+void registarAvaliacao(t_estudante* estudante, t_uc*  unidade_curricular)// Passando parâmetros por referência 
  {
-if(estudante->totalAvaliacoes <50 && unidade_curricular->totalAvaliacoes <50){
-    Avaliacao novaAvaliacao;
-
-    printf("\n Entre com o ID da avaliação : \n");
-    scanf("%d",&novaAvaliacao.idAvaliacao);
-    // Preencha os detalhes da avaliação, como a nota, a data, etc.
-
-        // Adiciona a nova avaliação ao estudante e à unidade curricular
-        estudante->avaliacoes[estudante->totalAvaliacoes] = novaAvaliacao;
-        unidade_curricular->avaliacoes[unidade_curricular->totalAvaliacoes] = novaAvaliacao;
-
-        // Incrementa o contador de avaliações
-        estudante->totalAvaliacoes++;
-        unidade_curricular->totalAvaliacoes++;
-         printf("Avaliacao registrada com sucesso!\n");
-}
-else {
-        printf("Nao foi possivel adicionar mais avaliacoes. Limite atingido.\n");
-    }
 
 }
 
 //#### 06 - FUNÇÕES DE CALCULOS ####
 
-float calcularMedia(Estudante* estudante){
-    float soma = 0;
-
-    for(int i= 0;i < estudante->totalAvaliacoes;i++){
-        soma += estudante->avaliacoes[i].classificacaoFinal;
-    }
-    if(estudante->totalAvaliacoes >0){
-        return soma/estudante->totalAvaliacoes;
-    }else{
-        return 0.0;
-    }
+float calcularMedia(t_estudante* estudante){
+   
 }
 
-void mostrarAvaliacoes(Estudante* estudante){
-    printf("\nAvaliacoes do estudante:\n");
-    for (int i = 0; i < estudante->totalAvaliacoes; i++)
-    {
-        printf("ID Avaliacao: %d, Nota: %d\n",estudante->avaliacoes[i].idAvaliacao, estudante->avaliacoes[i].classificacaoFinal);
-    }
+void mostrarAvaliacoes(t_estudante* estudante){
+   
     
 }
 
@@ -404,3 +271,5 @@ int telaAgradecimento(){
     printf("++++++++++++++++++++++++++");
     return 0;
 }
+*/
+
