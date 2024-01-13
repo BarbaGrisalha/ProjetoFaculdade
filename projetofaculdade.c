@@ -50,10 +50,10 @@ void lerDadosEstudantes(t_estudante* registros, int totalRegistros);
 int registarDadosUnidadeCurricular(t_uc* unidadeCurricular,int* totalUCs);
 void gravacaoDadosUnidadeCurricular(t_uc* unidadeCurricular);
 void lerDadosUnidadeCurricular(t_uc* unidadeCurricular);
-
-//int gerarIdAvaliacao(int* proximoIdAvaliacao, t_avaliacao* registros, int totalRegistros);
-int cadastrarAvaliacao(t_avaliacao* avaliacao, int* proximoIdAvaliacao, t_avaliacao* registros, int* totalRegistros);
+int cadastrarAvaliacao(int* proximoIdAvaliacao, t_avaliacao* registros, int* totalRegistros,t_avaliacao avaliacao);
 void lerAvaliacoes(t_avaliacao* registros, int totalRegistros);
+
+void gravacaoAvaliacoes(t_avaliacao* avaliacao); 
 
 
 //####  04 - MAIN    #### 
@@ -68,6 +68,7 @@ int main ()
     int totalRegistros=0;
     int totalUCs=0;
     int proximoAvaliacao=0;
+    int proximoIdAvaliacao=0;
     //### 04.1 Menu Principal
     do
     {
@@ -75,13 +76,12 @@ int main ()
         switch (opcao)
         {
             case 1:
-                registarDadosEstudantes(&estudante,&proximoIdEstudante,registros, &totalRegistros);//DONE
+                registarDadosEstudantes(&estudante,&proximoIdEstudante,registros, &totalRegistros);
                 fflush(stdin);
                 getchar();
                 break;
             case 2:
-                lerDadosEstudantes(registros, totalRegistros);// DONE
-                //system("cls");
+                lerDadosEstudantes(registros, totalRegistros);
                 fflush(stdin);
                 getchar();
                 break;
@@ -96,7 +96,7 @@ int main ()
                 getchar();
                 break; 
             case 5:
-                cadastrarAvaliacao( &avaliacao,proximoIdAvaliacao, totalRegistros);
+                cadastrarAvaliacao(&proximoIdAvaliacao, registros, &totalRegistros, avaliacao);
                 fflush(stdin);
                 getchar();
                 break;    
@@ -104,13 +104,10 @@ int main ()
                 lerAvaliacoes(registros, totalRegistros);
                 break;
             case 7:
-                //estatísticas
                 printf("Estatísticas!!!!");
                 break;
             case 0:
                 exit(0);
-                system("cls");
-                fflush(stdin);
                 getchar();
                 break;       
             default:
@@ -196,6 +193,7 @@ int registarDadosEstudantes(t_estudante* estudante,int* proximoIdEstudante, t_es
    gravacaoDados(estudante);
     return 0 ;
 }
+
 void gravacaoDados(t_estudante* estudante) {
     FILE *arquivoDados = fopen("arquivoEstudante.bin","ab"); // Criando a variável ponteiro para o arquivo
 
@@ -210,14 +208,14 @@ void gravacaoDados(t_estudante* estudante) {
     printf("Dados gravados com sucesso no arquivo!\n");
 }
 
-int compararIDAvaliacoes(const void *a, const void *b)
+int compararIDEstudantes(const void *a, const void *b)
 {
-    const t_avaliacao *avaliacaoA = (const t_avaliacao *)a;
-    const t_avaliacao *avaliacaoB = (const t_avaliacao *)b;
-    return avaliacaoA->idAvaliacao - avaliacaoB->idAvaliacao;
+     const t_estudante *estudanteA = (const t_estudante *)a;
+    const t_estudante *estudanteB = (const t_estudante *)b;
+    return estudanteA->idEstudante - estudanteB->idEstudante;
 }
 
-void lerDadosEstudantes(t_estudante* registros,int totalRegistros)//t_estudante* estudante
+void lerDadosEstudantes(t_estudante* registros,int totalRegistros)
 {
     FILE *arquivoDados = fopen("arquivoEstudante.bin","rb");
     
@@ -226,15 +224,13 @@ void lerDadosEstudantes(t_estudante* registros,int totalRegistros)//t_estudante*
         printf("\nArquivo nao encontrado ou corrompido!");
         return;
     }
-    // Lê todos os registos em um vetor
-   // t_estudante registros[MAX_ESTUDANTES]; //Supondo um numero máximo de 100 registos
     int totalRegistos = 0;
     system("clear");
     while (fread(&registros[totalRegistos],sizeof(t_estudante),1,arquivoDados)>0)
     {
         totalRegistos++;     
     }
-    qsort(registros,totalRegistos,sizeof(t_estudante), compararID);
+    qsort(registros,totalRegistos,sizeof(t_estudante), compararIDEstudantes);
     for (int i = 0; i < totalRegistos; i++)
     {
             printf("\t\t\nID : %d \n", registros[i].idEstudante);
@@ -360,30 +356,31 @@ int gerarIdAvaliacao(int* proximoIdAvaliacao, t_avaliacao* registros, int totalR
     }
     return novoId;
 }
-
-int cadastrarAvaliacao(t_avaliacao* avaliacao, int* proximoIdAvaliacao, t_avaliacao* registros, int* totalRegistros)//Passando por paremetro a variável estudante da Struct Estudante
+int cadastrarAvaliacao(int* proximoIdAvaliacao, t_avaliacao* registros, int* totalRegistros, t_avaliacao avaliacao)
 {
     char opcao;
+    
+  
     do{ 
-        avaliacao->idAvaliacao = gerarIdAvaliacao(proximoIdAvaliacao, registros, *totalRegistros);
+        avaliacao.idAvaliacao = gerarIdAvaliacao(proximoIdAvaliacao, registros, *totalRegistros);
         printf("Entre com o ID do Estudante: \n");
-        scanf("%d", &(avaliacao->idEstudante));
+        scanf("%d", &(avaliacao.idEstudante));
         printf("Entre com o ID da Unidade Curricular: \n");
-        scanf("%d", &(avaliacao->idUnidadeCurricular));
+        scanf("%d", &(avaliacao.idUnidadeCurricular));
         printf("Entre com o Ano Letivo: \n");
-        scanf("%6s", avaliacao->anoLetivo);
+        scanf("%6s", avaliacao.anoLetivo);
         printf("Entre com a Época da Avaliação: \n");
-        scanf("%39s", avaliacao->epocaAvaliacao);
+        scanf("%39s", avaliacao.epocaAvaliacao);
         printf("Entre com a Data da Avaliação (formato DD/MM/AAAA): \n");
-        scanf("%9s", avaliacao->dataAvaliacao);
+        scanf("%9s", avaliacao.dataAvaliacao);
         printf("Entre com a Classificação Final: \n");
-        scanf("%d", &(avaliacao->classificacaoFinal));
+        scanf("%d", &(avaliacao.classificacaoFinal));
 
         printf("Deseja inserir outra avaliação? (s/n)\n");
         scanf(" %c", &opcao);
         
     } while (opcao !='n' && opcao !='N');
-   gravacaoAvaliacoes(avaliacao);
+   gravacaoAvaliacoes(&avaliacao);
     return 0 ;
 }
 
@@ -400,14 +397,14 @@ void gravacaoAvaliacoes(t_avaliacao* avaliacao) {
 
     printf("Dados da avaliação gravados com sucesso no arquivo!\n");
 }
-
-int compararID(const void *a, const void *b)
+int compararIDAvaliacoes(const void *a, const void *b)
 {
-    const t_estudante *estudanteA = (const t_estudante *)a;
-    const t_estudante *estudanteB = (const t_estudante *)b;
-    return estudanteA->idEstudante - estudanteB->idEstudante;
+    const t_avaliacao *avaliacaoA = (const t_avaliacao *)a;
+    const t_avaliacao *avaliacaoB = (const t_avaliacao *)b;
+    return avaliacaoA->idAvaliacao - avaliacaoB->idAvaliacao;
 }
-void lerAvaliacoes(t_avaliacao* registros, int totalRegistros)//t_estudante* estudante
+
+void lerAvaliacoes(t_avaliacao* registros, int totalRegistros)
 {
     FILE* arquivoAvaliacoes = fopen("arquivoAvaliacoes.bin", "rb");
     
@@ -425,7 +422,7 @@ void lerAvaliacoes(t_avaliacao* registros, int totalRegistros)//t_estudante* est
     {
         totalAvaliacoes++;     
     }
-    qsort(registros,totalRegistros,sizeof(t_estudante), compararID);
+    qsort(registros,totalRegistros,sizeof(t_avaliacao), compararIDAvaliacoes);
     for (int i = 0; i < totalAvaliacoes; i++) {
         printf("\t\t\nID da Avaliação: %d \n", registros[i].idAvaliacao);
         printf("ID do Estudante: %d \n", registros[i].idEstudante);
